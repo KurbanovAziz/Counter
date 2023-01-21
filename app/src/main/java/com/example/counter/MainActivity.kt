@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.counter.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(),View {
+class MainActivity : AppCompatActivity(), View {
 
     private lateinit var binding: ActivityMainBinding
     private val presenter = Presenter()
@@ -21,25 +21,29 @@ class MainActivity : AppCompatActivity(),View {
 
 
     private fun initClickers() {
-        with(binding){
+        with(binding) {
             incrementBtn.setOnClickListener {
                 presenter.increment()
+                presenter.examination()
             }
             decrementBtn.setOnClickListener {
                 presenter.decrement()
+                presenter.examination()
             }
         }
-    }
 
-    @SuppressLint("ResourceAsColor")
+    }
     override fun changeCount(count: Int) {
         binding.resultTv.text = count.toString()
-
-        if (count == 10){
-            Toast.makeText(this,"Поздрaвляем", Toast.LENGTH_SHORT).show()
-        }
-        if (count == 15){
-            binding.resultTv.setTextColor(R.color.green)
-        }
     }
+
+    override fun showToast(msg: String) {
+        showToast(this,msg)
+    }
+
+    override fun setColor(color: Int) {
+        binding.resultTv.setTextColor(color)
+    }
+
+
 }
